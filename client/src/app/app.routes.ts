@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { Upload } from './features/upload/upload';
+import { Home } from './features/home/home';
 
 export const routes: Routes = [
     {
-        path: '', component: Upload
+        path: '', component: Home
         
     }
 ];
