@@ -1,3 +1,14 @@
 
-<p-fileUpload  mode="advanced" chooseLabel="Choose" chooseIcon="pi pi-upload" name="demo" url="dummy.com" accept="image/*" maxFileSize="5000000"></p-fileUpload>
 
+
+    <div class="card">
+        
+        <p-fileupload name="myimage" url="dummy.com" [multiple]="false" fileLimit=1 accept=".jpg,.png" maxFileSize="5000000" mode="advanced">
+              <ng-template pTemplate="empty">
+                    <div class="empty-state">
+                        <i class="pi pi-cloud-upload upload-icon"></i>
+                        <p class="upload-text">Drag and drop image files here to upload.</p>
+                    </div>
+                </ng-template>
+        </p-fileupload>
+    </div>
