@@ -1,0 +1,9 @@
+services:
+  trufor:
+    build: 
+      context: ../models/trufor
+      dockerfile: Dockerfile
+    image: trufor
+    volumes:
+      - ./model_outputs:/model_outputs
+      - ./saved_photo:/saved_photo
