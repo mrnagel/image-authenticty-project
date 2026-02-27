@@ -19,8 +19,8 @@ class Coordinator():
     def __init__(self):
         self.model_names = []
         self.models = []
-        self._modelPath = './models'
-        self._dockerPath = './backend/'
+        self._modelPath = '../models'
+        self._dockerPath = './'
 
         self._initModels()
 

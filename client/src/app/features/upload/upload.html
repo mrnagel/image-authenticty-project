@@ -2,12 +2,22 @@
 
 
 <div class="card">
-    <p-fileupload name="image" url="/api/upload-image/" [multiple]="false" fileLimit=1 accept=".jpg,.png" maxFileSize="5000000" mode="advanced">
+    <p-fileUpload name="image" url="/api/upload-image/" [customUpload]="true" [multiple]="false" fileLimit=1 accept=".jpg,.png" maxFileSize="5000000" mode="advanced" (uploadHandler)="onUpload($event)">
             <ng-template pTemplate="empty">
                 <div class="empty-state">
                     <i class="pi pi-cloud-upload upload-icon"></i>
                     <p class="upload-text">Drag and drop image files here to upload.</p>
                 </div>
             </ng-template>
-    </p-fileupload>
+    </p-fileUpload>
 </div>
+
+@if (job) {
+    <div>
+        <p>Status: {{ job.status }}</p>
+
+        @if (job.error) {
+            <p>Error: {{job.error}}</p>
+        }
+    </div>
+}
