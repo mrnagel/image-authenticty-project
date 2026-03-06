@@ -12,8 +12,12 @@ class reportAggregator:
         folders = [i.name for i in path.iterdir() if i.is_dir()]
         return_json = {}
         for i in folders:
-            with np.load(f'{self._modelPath}/{i}/results.npz') as data:
-                return_json[i] = {key: data[key].tolist() for key in data.files if type(data[key]) == np.ndarray}
+            npz_files = list(pathlib.Path(f'{self._modelPath}/{i}').glob('*.npz'))
+            if not npz_files:
+                continue
+            latest = max(npz_files, key=lambda f: f.stat().st_mtime)
+            with np.load(latest) as data:
+                return_json[i] = {key: data[key].tolist() for key in data.files if data[key].ndim == 0}
         
         return json.dumps(return_json, indent=4)
 

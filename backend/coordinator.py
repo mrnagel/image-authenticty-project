@@ -1,5 +1,6 @@
 import subprocess
 import pathlib
+from reportAggregator import reportAggregator
 
 class ModelContainer():
     def __init__(self, name, detached=True):
@@ -35,17 +36,18 @@ class Coordinator():
         print(f'Models available: {self.model_names}')
 
     def analyzeImages(self, models=None, detached=True):
-        if detached: flag = ' -d'
-        else: flag = ''
-
         if models:
             # TODO: Implement individual running and running in non-detached mode
             # This will involve the runAnalysis function
             print('Not Implemented')
             exit()
         else:
-            cmd = f'docker compose -f {self._dockerPath}docker-compose.yml up{flag}'
+            cmd = f'docker compose -f {self._dockerPath}docker-compose.yml up -d'
             subprocess.run(cmd.split(" "))
+            if not detached:
+                cmd = f'docker compose -f {self._dockerPath}docker-compose.yml wait {" ".join(self.model_names)}'
+                subprocess.run(cmd.split(" "))
+                return reportAggregator().aggregateResults()
 
 if __name__ == '__main__':
     x = Coordinator()

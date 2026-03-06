@@ -1,0 +1,10 @@
+@if (job) {
+    <div>
+        @if (job.error) {
+            <p>Error: {{job.error}}</p>
+        }
+        @if (job.result) {
+            <pre>{{job.result}}</pre>
+        }
+    </div>
+}

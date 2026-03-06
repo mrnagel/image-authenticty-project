@@ -7,6 +7,8 @@ from pydantic import BaseModel
 import time
 from coordinator import Coordinator
 import uuid
+import shutil
+import pathlib
 
 app = FastAPI()
 
@@ -27,38 +29,41 @@ class Job(BaseModel):
     filename: str
     startedAt: float
     error: Optional[str] = None
+    result: Optional[str] = None
 
 jobs: Dict[str, Job] = {}
 
-@app.get("/")
-def root():
-    return {"Hello": "World"}
 
-def _run_analysis_job(job_id: str, detached: bool = True):
-    job = jobs[job_id]
+def _run_analysis_job(job_id: str):
+    jobs[job_id].status = "running"
     try:
-        coordinator.analyzeImages(detached=detached)
-        jobs[job_id].status = "running" if detached else "completed"
+        result = coordinator.analyzeImages(detached=False)
+        jobs[job_id].result = result
+        jobs[job_id].status = "completed"
     except Exception as e:
         jobs[job_id].status = "failed"
         jobs[job_id].error = str(e)
     
-
+SAVE_DIR = pathlib.Path('./saved_photo')
+SAVE_DIR.mkdir(exist_ok=True)
 
 @app.post("/upload-image/", response_model = Job)
 async def upload_image(image: UploadFile = File(...)):
     job_id = uuid.uuid4().hex
 
+    save_path = SAVE_DIR / image.filename
+    with save_path.open('wb') as f:
+        shutil.copyfileobj(image.file, f)
+
     jobs[job_id] = Job(
         jobId = job_id,
         status="queued",
-        filename =image.filename,
+        filename=image.filename,
         startedAt=time.time()
     )
 
-    t = threading.Thread(target=_run_analysis_job, args=(job_id, True), daemon=True)
+    t = threading.Thread(target=_run_analysis_job, args=(job_id,), daemon=True)
     t.start()
-    print(image.filename)
     return jobs[job_id]
 
 @app.get("/job-status/{job_id}", response_model=Job)

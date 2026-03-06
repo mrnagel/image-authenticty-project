@@ -2,7 +2,16 @@
 
 
 <div class="card">
-    <p-fileUpload name="image" url="/api/upload-image/" [customUpload]="true" [multiple]="false" fileLimit=1 accept=".jpg,.png" maxFileSize="5000000" mode="advanced" (uploadHandler)="onUpload($event)">
+    <p-fileUpload #fileUpload name="image" url="/api/upload-image/" [customUpload]="true" [multiple]="false" fileLimit=1 accept=".jpg,.png" maxFileSize="5000000" mode="advanced" (uploadHandler)="onUpload($event)">
+            <ng-template pTemplate="file" let-file>
+                <div class="p-fileupload-file">
+                    @if (file.objectURL) {
+                        <img [src]="file.objectURL" [alt]="file.name" width="50" />
+                    }
+                    <span class="p-fileupload-file-name">{{file.name}}</span>
+                    <p-badge [value]="job?.status ?? 'pending'" [severity]="badgeSeverity" />
+                </div>
+            </ng-template>
             <ng-template pTemplate="empty">
                 <div class="empty-state">
                     <i class="pi pi-cloud-upload upload-icon"></i>
@@ -12,12 +21,5 @@
     </p-fileUpload>
 </div>
 
-@if (job) {
-    <div>
-        <p>Status: {{ job.status }}</p>
+<app-report-viewer [job]="job" />
 
-        @if (job.error) {
-            <p>Error: {{job.error}}</p>
-        }
-    </div>
-}

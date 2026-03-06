@@ -12,6 +12,7 @@ export interface Job {
   filename: string;
   startedAt: number;
   error?: string | null;
+  result?: string | null;
 }
 
 @Injectable({
