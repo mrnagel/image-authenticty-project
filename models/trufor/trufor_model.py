@@ -101,13 +101,11 @@ with torch.no_grad():
                 sub_path = sub_path[1:]
 
             filename_out = os.path.join(output, sub_path) + '.npz'
-            
         else:  # output is a filename
             filename_out = output
-
+            print(filename_out)
         if not filename_out.endswith('.npz'):
             filename_out = filename_out + '.npz'
-        print(filename_out)
         # by default it does not overwrite
         if not (os.path.isfile(filename_out)):
             try:

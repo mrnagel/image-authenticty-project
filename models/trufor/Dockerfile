@@ -11,4 +11,4 @@ RUN unzip -q -o TruFor_weights.zip && rm TruFor_weights.zip
 
 COPY . .
 
-CMD ["python", "trufor_model.py", "-in", "/saved_photo", "-out", "/model_outputs", "-exp", "trufor_ph3", "TEST.MODEL_FILE", "weights/trufor.pth.tar"]
+CMD ["python", "trufor_model.py", "-in", "/saved_photo", "-out", "/model_outputs/trufor/results.npz", "-exp", "trufor_ph3", "TEST.MODEL_FILE", "weights/trufor.pth.tar"]

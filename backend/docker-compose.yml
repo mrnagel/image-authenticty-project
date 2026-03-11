@@ -5,5 +5,5 @@ services:
       dockerfile: Dockerfile
     image: trufor
     volumes:
-      - ./model_outputs/trufor:/model_outputs
+      - ./model_outputs:/model_outputs
       - ./saved_photo:/saved_photo
