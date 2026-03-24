@@ -1,0 +1,10 @@
+tqdm
+pandas
+numpy==1.26.4
+scikit-learn
+pillow
+PyYAML
+torchvision==0.15.2
+torch==2.0.1
+timm>=1.0.12
+transformers>=4.43.4
