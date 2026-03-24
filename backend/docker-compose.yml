@@ -7,12 +7,20 @@ services:
     volumes:
       - ./model_outputs:/model_outputs
       - ./saved_photo:/saved_photo
-
   bfree:
     build: 
       context: ../models/bfree
       dockerfile: Dockerfile
     image: bfree
+    volumes:
+      - ./model_outputs:/model_outputs
+      - ./saved_photo:/saved_photo
+  
+  dda:
+    build: 
+      context: ../models/dda
+      dockerfile: Dockerfile
+    image: dda
     volumes:
       - ./model_outputs:/model_outputs
       - ./saved_photo:/saved_photo

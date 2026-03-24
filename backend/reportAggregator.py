@@ -23,4 +23,4 @@ class reportAggregator:
 
 if __name__ == "__main__":
     aggregator = reportAggregator()
-    aggregator.aggregateResults()
+    print(aggregator.aggregateResults())
