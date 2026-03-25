@@ -51,8 +51,11 @@ class reportAggregator:
             pred = True
         
         return pred, conf
-
-if __name__ == "__main__":
+    
+def main():
     aggregator = reportAggregator()
     json_data = aggregator.aggregateResults()
     print(aggregator.calculateConfidence(json_data))
+
+if __name__ == "__main__":
+    main()
