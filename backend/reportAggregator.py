@@ -2,7 +2,6 @@ import numpy as np
 import pathlib
 import json
 
-
 class reportAggregator:
     def __init__(self):
         self._modelPath = './model_outputs'
@@ -12,15 +11,15 @@ class reportAggregator:
         folders = [i.name for i in path.iterdir() if i.is_dir()]
         return_json = {}
         for i in folders:
-            npz_files = list(pathlib.Path(f'{self._modelPath}/{i}').glob('*.npz'))
-            if not npz_files:
+            npz_file = list(pathlib.Path(f'{self._modelPath}/{i}').glob('*.npz'))
+            if not npz_file:
                 continue
-            latest = max(npz_files, key=lambda f: f.stat().st_mtime)
-            with np.load(latest) as data:
-                return_json[i] = {key: data[key].tolist() for key in data.files if data[key].ndim == 0}
+            
+            with np.load(npz_file[0]) as data:
+                return_json[i] = {key: data[key].tolist() for key in data.files}
         
         return json.dumps(return_json, indent=4)
 
 if __name__ == "__main__":
     aggregator = reportAggregator()
-    print(aggregator.aggregateResults())
+    aggregator.aggregateResults()
