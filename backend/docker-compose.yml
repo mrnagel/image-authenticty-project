@@ -7,6 +7,7 @@ services:
     volumes:
       - ./model_outputs:/model_outputs
       - ./saved_photo:/saved_photo
+  
   bfree:
     build: 
       context: ../models/bfree
