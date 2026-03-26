@@ -22,7 +22,10 @@ class reportAggregator:
 
     def calculateConfidence(self, data_json):
         def inverse_h(p: np.array):
-            '''Binary Entropy Function'''
+            '''
+            Binary Entropy Function
+            https://en.wikipedia.org/wiki/Binary_entropy_function
+            '''
             h_x = (-p*np.log2(p)) - (1-p)*np.log2(1-p)
             # 1- h_x to invert the outputs, meaning 0.5 is 0 not 1
             return 1 - h_x
@@ -35,7 +38,7 @@ class reportAggregator:
             p_fake = np.append(p_fake, data[i].get('p_fake', -1))
 
         if -1 in p_fake:
-            raise(ValueError, 'Not all models have p_fake!')
+            raise ValueError('Not all models have p_fake!')
         
         # False if model predicts real, True if fake
         preds = np.array([True if i > 0.5 else False for i in p_fake])
@@ -50,7 +53,7 @@ class reportAggregator:
             conf = 0
             pred = True
         
-        return pred, conf
+        return pred, conf, p_fake.tolist()
     
 def main():
     aggregator = reportAggregator()
