@@ -16,7 +16,7 @@ class reportAggregator:
                 continue
             
             with np.load(npz_file[0]) as data:
-                return_json[i] = {key: data[key].tolist() for key in data.files}
+                return_json[i] = {key: data[key].tolist() for key in data.files if data[key].ndim == 0}
         
         return json.dumps(return_json, indent=4)
 

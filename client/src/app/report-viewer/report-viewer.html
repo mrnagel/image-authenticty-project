@@ -1,10 +1,9 @@
-@if (job) {
-    <div>
-        @if (job.error) {
-            <p>Error: {{job.error}}</p>
-        }
-        @if (job.result) {
-            <pre>{{job.result}}</pre>
-        }
-    </div>
+@if (job?.status === 'completed') {
+  <div class="report">
+    <app-binary-entropy-chart [results]="results" />
+  </div>
+}
+
+@if (job?.error) {
+  <p>Error: {{ job!.error }}</p>
 }
