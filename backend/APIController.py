@@ -38,7 +38,7 @@ jobs: Dict[str, Job] = {}
 def _run_analysis_job(job_id: str):
     jobs[job_id].status = "running"
     try:
-        result = coordinator.analyzeImages(detached=False)
+        result = coordinator.analyzeImages(detached=False, visualizer=True)
         jobs[job_id].result = result
         jobs[job_id].status = "completed"
     except Exception as e:

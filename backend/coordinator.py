@@ -62,7 +62,7 @@ class Coordinator():
             visualizer = ModelContainer('visualizer', detached=detached)
             visualizer.runAnalysis()
 
-        return reportAggregator(self._outputPath).calculateMetrics()
+        return reportAggregator(self._outputPath).aggregateResults()
 
 if __name__ == '__main__':
     x = Coordinator()
