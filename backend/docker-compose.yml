@@ -25,3 +25,13 @@ services:
     volumes:
       - ./model_outputs:/model_outputs
       - ./saved_photo:/saved_photo
+
+  visualizer:
+    build: 
+      context: ../models/visualizer
+      dockerfile: Dockerfile
+    image: visualizer
+    volumes:
+      - ./saved_photo:/saved_photo
+      - ./model_outputs/visualizer:/model_outputs/visualizer
+      - ./model_outputs/trufor/:/model_outputs/trufor/

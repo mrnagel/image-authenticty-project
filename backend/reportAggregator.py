@@ -3,8 +3,8 @@ import pathlib
 import json
 
 class reportAggregator:
-    def __init__(self):
-        self._modelPath = './model_outputs'
+    def __init__(self, modelPath='./model_outputs'):
+        self._modelPath = modelPath
     
     def aggregateResults(self):
         path = pathlib.Path(self._modelPath)
@@ -55,10 +55,13 @@ class reportAggregator:
         
         return pred, conf, p_fake.tolist()
     
+    def calculateMetrics(self):
+        json_data = self.aggregateResults()
+        return self.calculateConfidence(json_data)
+    
 def main():
     aggregator = reportAggregator()
-    json_data = aggregator.aggregateResults()
-    print(aggregator.calculateConfidence(json_data))
+    print(aggregator.calculateMetrics())
 
 if __name__ == "__main__":
     main()

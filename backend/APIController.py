@@ -9,6 +9,7 @@ from coordinator import Coordinator
 import uuid
 import shutil
 import pathlib
+import os
 
 app = FastAPI()
 
@@ -49,6 +50,10 @@ SAVE_DIR.mkdir(exist_ok=True)
 
 @app.post("/upload-image/", response_model = Job)
 async def upload_image(image: UploadFile = File(...)):
+    # Remove old photos
+    for i in os.listdir(SAVE_DIR):
+        os.remove(SAVE_DIR / i)
+        
     job_id = uuid.uuid4().hex
 
     save_path = SAVE_DIR / image.filename
