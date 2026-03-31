@@ -137,6 +137,7 @@ with torch.no_grad():
                 out_dict['map'    ] = pred
                 out_dict['imgsize'] = tuple(rgb.shape[2:])
                 if det is not None:
+                    out_dict['score'] = det_sig
                     out_dict['p_fake'] = det_sig # Modified from original code to include both p_fake and p_real
                     out_dict['p_real'] = 1 - det_sig
                 if conf is not None:
