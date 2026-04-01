@@ -59,8 +59,10 @@ class Coordinator():
                 subprocess.run(cmd.split(" "))
 
         if visualizer:
-            visualizer = ModelContainer('visualizer', detached=detached)
-            visualizer.runAnalysis()
+            cmd = f'docker compose -f {self._dockerPath}docker-compose.yml up -d visualizer'
+            subprocess.run(cmd.split(" "))
+            cmd = f'docker compose -f {self._dockerPath}docker-compose.yml wait visualizer'
+            subprocess.run(cmd.split(" "))
 
         return reportAggregator(self._outputPath).aggregateResults()
 
