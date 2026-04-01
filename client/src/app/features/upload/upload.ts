@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { AnalysisService, Job } from '../../services/analysis-service';
-import { ReportViewer } from '../../report-viewer/report-viewer';
+import { ReportViewer } from '../report-viewer/report-viewer';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { FileUpload, FileUploadModule } from 'primeng/fileupload';

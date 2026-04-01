@@ -65,6 +65,9 @@ export class BinaryEntropyChart implements OnChanges {
     };
 
     this.chartOptions = {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2,
       plugins: {
         legend: {
           position: 'bottom',

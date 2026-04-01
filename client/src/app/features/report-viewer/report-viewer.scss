@@ -1,0 +1,34 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+}
+
+.report {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .report-title {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .section-title {
+    text-align: center;
+    margin: 0;
+  }
+
+  .disclaimer {
+    font-style: italic;
+    text-align: center;
+    max-width: 600px;
+    line-height: 1.6;
+    margin: 0 auto;
+  }
+
+  .chart {
+    margin-left: 12%;
+  }
+}

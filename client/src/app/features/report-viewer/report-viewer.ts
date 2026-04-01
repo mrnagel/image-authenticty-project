@@ -1,11 +1,12 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Job } from '../services/analysis-service';
+import { Job } from '../../services/analysis-service';
 import { BinaryEntropyChart, ModelResult } from './binary-entropy-chart/binary-entropy-chart';
+import { HeatmapOverlay } from './heatmap-overlay/heatmap-overlay';
 
 @Component({
   selector: 'app-report-viewer',
   standalone: true,
-  imports: [BinaryEntropyChart],
+  imports: [BinaryEntropyChart, HeatmapOverlay],
   templateUrl: './report-viewer.html',
   styleUrl: './report-viewer.scss',
 })

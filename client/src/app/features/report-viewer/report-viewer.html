@@ -1,0 +1,21 @@
+@if (job?.status === 'completed') {
+  <div class="report">
+    <h2 class="report-title"><u>Image Authenticity Report</u></h2>
+
+    <h3 class="section-title">Per-Model Prediction Confidence</h3>
+    <app-binary-entropy-chart [results]="results" class="chart" />
+    <p class="disclaimer">
+      Confidence is non-linear, which means a model needs to be very close to 0% or 100% to score
+      high certainty. For example, a prediction of 89.5% fake may only yield ~51% confidence
+      because the model still has meaningful uncertainty. Only predictions near the extremes reflect
+      near-certain judgements.
+    </p>
+
+    <h3 class="section-title">Trufor Manipulation Heatmap</h3>
+    <app-heatmap-overlay />
+  </div>
+}
+
+@if (job?.error) {
+  <p>Error: {{ job!.error }}</p>
+}
