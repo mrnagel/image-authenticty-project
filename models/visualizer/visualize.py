@@ -30,7 +30,7 @@ else:
     noisepr = None
 
 fig, axs = plt.subplots(1, cols)
-fig.suptitle('score: %.3f' % result['score'])
+fig.suptitle('score: %.3f' % result['p_fake'])
 
 for ax in axs:
     ax.axis('off')
