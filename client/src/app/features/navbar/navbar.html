@@ -1,0 +1,46 @@
+<nav class="navbar">
+  <span class="brand">AIGIgator: Artificially Generated Image Detection Tool</span>
+
+  <div class="nav-items">
+
+    <div class="nav-item">
+      <span class="nav-label">Selected Models</span>
+      <div class="dropdown">
+        <p class="dropdown-heading">Models Used</p>
+        <ul>
+          <li><a>TruFor</a></li>
+          <li><a>B-Free</a></li>
+          <li><a>DDA</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <span class="nav-label">How We Score</span>
+      <div class="dropdown dropdown-wide">
+        <p class="dropdown-heading">Aggregate Confidence Score</p>
+        <p>
+          Each model outputs a probability <em>p(fake)</em> between 0 and 1.
+          We average these values across all models, then apply the
+          binary entropy function to measure how decisive
+          the combined prediction is:
+        </p>
+        <p class="formula">confidence = 1 − H(p̄)</p>
+        <p>
+          where
+          <em>H(p) = −p·log₂(p) − (1−p)·log₂(1−p)</em>.
+          The final verdict is the majority prediction among models.
+          Confidence is how far the averaged probability is from 50/50.
+        </p>
+        <p>----------------------------------------</p>
+        <p>
+          <em>Note: confidence is non-linear — a model needs to be very close to 0% or 100% to score
+          high certainty. For example, a prediction of 89.5% fake may only yield ~51% confidence
+          because the model still has meaningful uncertainty. Only predictions near the extremes
+          reflect near-certain judgements.</em>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</nav>

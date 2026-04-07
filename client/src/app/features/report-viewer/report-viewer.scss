@@ -15,20 +15,48 @@
     padding: 0;
   }
 
+  .verdict {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+
+    &.verdict-fake {
+      background-color: lightsalmon;
+      border: 1px solid red;
+      color: darkred;
+    }
+
+    &.verdict-real {
+      background-color: lightgreen;
+      border: 1px solid green;
+      color: darkgreen;
+    }
+
+    .verdict-label {
+      font-size: 1.25rem;
+    }
+
+    .verdict-confidence {
+      font-size: 1rem;
+      opacity: 0.85;
+    }
+  }
+
   .section-title {
     text-align: center;
     margin: 0;
   }
 
-  .disclaimer {
-    font-style: italic;
-    text-align: center;
-    max-width: 600px;
-    line-height: 1.6;
-    margin: 0 auto;
+  .chart {
+    margin-left: 18%;
   }
 
-  .chart {
-    margin-left: 12%;
+  .heatmap {
+    width: 75%;
+    margin: 0 auto;
   }
 }
