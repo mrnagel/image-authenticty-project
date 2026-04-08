@@ -1,6 +1,6 @@
 @if (job?.status === 'completed') {
   <div class="report">
-    <h2 class="report-title"><u>Image Authenticity Report</u></h2>
+    <h2 class="report-title"><u>Image Authenticity Report:</u> {{ job!.filename }}</h2>
 
     @if (predictions) {
       <div class="verdict" [class.verdict-fake]="predictions.prediction" [class.verdict-real]="!predictions.prediction">
@@ -12,8 +12,14 @@
     <h3 class="section-title">Per-Model Prediction Confidence</h3>
     <app-binary-entropy-chart [results]="results" class="chart" />
 
-    <h3 class="section-title">Trufor Manipulation Heatmap</h3>
-    <app-heatmap-overlay class="heatmap" />
+    <div class="heatmap-section">
+      <h3 class="section-title">Trufor Manipulation Heatmap</h3>
+      <app-heatmap-overlay class="heatmap" />
+    </div>
+    <div class="report-actions">
+      <p-button label="Analyze New Image" icon="pi pi-upload" severity="secondary" (onClick)="newAnalysis.emit()" />
+      <p-button label="Export as PDF" icon="pi pi-file-pdf" severity="secondary" (onClick)="exportPdf()" />
+    </div>
   </div>
 }
 

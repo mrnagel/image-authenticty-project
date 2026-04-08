@@ -3,3 +3,10 @@
 body {
     font-family: 'Inter', sans-serif;
 }
+
+@media print {
+  app-navbar,
+  .report-actions {
+    display: none !important;
+  }
+}

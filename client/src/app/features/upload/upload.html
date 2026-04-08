@@ -20,5 +20,5 @@
       </p-fileUpload>
     </div>
   }
-  <app-report-viewer [job]="job" />
+  <app-report-viewer [job]="job" (newAnalysis)="onNewAnalysis()" />
 </div>

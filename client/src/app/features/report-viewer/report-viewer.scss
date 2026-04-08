@@ -52,11 +52,22 @@
   }
 
   .chart {
-    margin-left: 18%;
+    margin-left: 10%;
+  }
+  .heatmap-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    break-inside: avoid;
   }
 
   .heatmap {
     width: 75%;
     margin: 0 auto;
+  }
+  .report-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
   }
 }

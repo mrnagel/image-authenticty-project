@@ -49,6 +49,11 @@ export class Upload {
     
   }
 
+  onNewAnalysis(): void {
+    this.pollingSub?.unsubscribe();
+    this.job = undefined;
+  }
+
   ngOnDestroy(): void {
     this.pollingSub?.unsubscribe();
   }
