@@ -37,7 +37,15 @@ export class AnalysisService {
     return timer(0, intervalMs).pipe(
       switchMap(() => this.getJob(jobId)),
       takeWhile(job => job.status !== 'completed' && job.status !== 'failed', true)
-      
+
     );
+  }
+
+  getHeatmapUrl(): string {
+    return `${this.baseUrl}/heatmap`;
+  }
+
+  getOriginalImageUrl(): string {
+    return `${this.baseUrl}/original-image`;
   }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AnalysisService } from '../../../services/analysis-service';
 
 @Component({
   selector: 'app-heatmap-overlay',
@@ -7,6 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: './heatmap-overlay.scss',
 })
 export class HeatmapOverlay {
-  readonly originalUrl = 'http://localhost:8000/original-image';
-  readonly heatmapUrl = 'http://localhost:8000/heatmap';
+  readonly originalUrl: string;
+  readonly heatmapUrl: string;
+
+  constructor(private analysis: AnalysisService) {
+    this.originalUrl = this.analysis.getOriginalImageUrl();
+    this.heatmapUrl = this.analysis.getHeatmapUrl();
+  }
 }
