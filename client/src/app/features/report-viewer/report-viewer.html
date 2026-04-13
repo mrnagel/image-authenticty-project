@@ -10,7 +10,38 @@
     }
 
     <h3 class="section-title">Per-Model Prediction Confidence</h3>
-    <app-binary-entropy-chart [results]="results" class="chart" />
+    <app-binary-entropy-chart [results]="results" [avgPFake]="avgPFake" class="chart" />
+
+    @if (modelMetrics.length) {
+      <table class="metrics-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>p(fake)</th>
+            <th>Confidence</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (m of modelMetrics; track m.name) {
+            <tr>
+              <td>{{ m.name }}</td>
+              <td>{{m.pFake.toFixed(3) }}</td>
+              <td>{{(m.confidence * 100).toFixed(1)}}%</td>
+              <td [class.cell-fake]="m.verdict === 'fake'" [class.cell-authentic]="m.verdict === 'authentic'">{{ m.verdict }}</td>
+            </tr>
+          }
+          @if (avgPFake != null) {
+            <tr class="avg-row">
+              <td>Average</td>
+              <td>{{ avgPFake.toFixed(3)}}</td>
+              <td>{{(avgConfidence! * 100).toFixed(1)}}%</td>
+              <td [class.cell-fake]="avgVerdict==='fake'" [class.cell-authentic]="avgVerdict==='authentic'">{{ avgVerdict }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
 
     <div class="heatmap-section">
       <h3 class="section-title">Trufor Manipulation Heatmap</h3>
