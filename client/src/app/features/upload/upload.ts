@@ -4,13 +4,14 @@ import { ReportViewer } from '../report-viewer/report-viewer';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { FileUpload, FileUploadModule } from 'primeng/fileupload';
+import { MessageModule } from 'primeng/message';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-upload',
   standalone: true,
-  imports: [ BadgeModule, ButtonModule, FileUploadModule, ProgressBarModule, ReportViewer],
+  imports: [ BadgeModule, ButtonModule, FileUploadModule, MessageModule, ProgressBarModule, ReportViewer],
   templateUrl: './upload.html',
   styleUrl: './upload.scss',
 })

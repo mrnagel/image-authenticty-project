@@ -19,6 +19,9 @@ class reportAggregator:
             with np.load(npz_file[0]) as data:
                 return_json[i] = {key: data[key].tolist() for key in data.files if data[key].ndim == 0}
 
+        if not return_json:
+            raise RuntimeError("Analysis models failed to produce output. No report can be generated.")
+
         prediction, confidence = self.calculateConfidence(json.dumps(return_json))
 
         print(type(prediction), type(confidence))

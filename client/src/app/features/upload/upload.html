@@ -20,5 +20,8 @@
       </p-fileUpload>
     </div>
   }
+  @if (job?.status === 'failed') {
+    <p-message severity="error" styleClass="error-message">{{job?.error ?? 'An unexpected error occurred.'}}</p-message>
+  }
   <app-report-viewer [job]="job" (newAnalysis)="onNewAnalysis()" />
 </div>
