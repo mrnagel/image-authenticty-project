@@ -20,6 +20,8 @@ export class Upload {
   job?: Job;
   pollingSub?: Subscription;
 
+
+  // map job status to a PrimeNG badge severity to visually indicate job status
   get badgeSeverity(): 'success' | 'danger' | 'info' | 'warn' {
     switch (this.job?.status) {
       case 'completed': return 'success';
@@ -31,6 +33,8 @@ export class Upload {
   
   constructor(private analysis: AnalysisService, private cdr: ChangeDetectorRef) {}
 
+  //upload image, then begin polling every 2 seconds
+  //cancel any existing polls before starting the new one
   onUpload(event: any) {
     const file: File | undefined = event?.files?.[0];
     if (!file) return;
@@ -42,6 +46,8 @@ export class Upload {
       this.pollingSub?.unsubscribe();
       this.pollingSub = this.analysis.pollJob(job.jobId, 2000).subscribe((updatedJob) => {
         this.job = updatedJob;
+        
+        // trigger change detection manually (Angular itself doesn't run polling)
         this.fileUpload.cd.detectChanges();
         this.cdr.detectChanges();
         console.log('job update', updatedJob)
@@ -50,11 +56,13 @@ export class Upload {
     
   }
 
+  //cancel any active poll and reset for new analysis
   onNewAnalysis(): void {
     this.pollingSub?.unsubscribe();
     this.job = undefined;
   }
 
+  //cleanup logic when component destroyed
   ngOnDestroy(): void {
     this.pollingSub?.unsubscribe();
   }

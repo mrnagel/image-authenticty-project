@@ -25,7 +25,7 @@ export class BinaryEntropyChart implements OnChanges {
   ngOnChanges(): void {
     this.buildChart();
   }
-
+  //change average marker to black for print contrast, then restore after printing
   prepareForPrint(): void {
     this.setAvgColor('#000000');
   }
@@ -41,11 +41,13 @@ export class BinaryEntropyChart implements OnChanges {
     chart.update('none');
   }
 
+  // binary entropy confidence is 1-H(p), doesn't include where log2 is undefined
   private confidence(p: number): number {
     if (p === 0 || p === 1) return 1;
     return 1 - (-p * Math.log2(p) - (1 - p) * Math.log2(1 - p));
   }
 
+  //generate 200 x values spaced from 0 to 1 to plot entropy curve
   private buildChart(): void {
     const steps = 200;
     const xs = Array.from({ length: steps + 1 }, (_, i) => i / steps);
@@ -56,6 +58,7 @@ export class BinaryEntropyChart implements OnChanges {
       dda: '#f59e0b',
     };
 
+    // each model's p_fake score gets plotted as a point on the curve
     const scatterDatasets = Object.entries(this.results).map(([name, r]) => ({
       type: 'scatter',
       label: name,
@@ -79,12 +82,13 @@ export class BinaryEntropyChart implements OnChanges {
       hitRadius: 10,
     }]:[];
 
+    //use line dataset to draw entropy curve, overlay model predictions w/ scatter dataset
     this.chartData = {
       labels: xs.map((x) => x.toFixed(2)),
       datasets: [
         {
           type: 'line',
-          data: xs.map((x) => ({ x, y: this.confidence(x) })),
+          data: xs.map((x) => ({ x, y: this.confidence(x)})),
           borderColor: '#94a3b8',
           borderWidth: 1.5,
           pointRadius: 0,
@@ -102,6 +106,8 @@ export class BinaryEntropyChart implements OnChanges {
       plugins: {
         legend: {
           position: 'bottom',
+
+          //exclude entropy curve line from legend
           labels: { filter: (item: any) => item.datasetIndex !== 0, usePointStyle: true },
         },
         tooltip: {

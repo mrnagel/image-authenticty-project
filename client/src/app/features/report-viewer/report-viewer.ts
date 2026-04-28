@@ -26,7 +26,6 @@ export class ReportViewer implements OnChanges {
   @Input() job?: Job;
   @Output() newAnalysis = new EventEmitter<void>();
   @ViewChild(BinaryEntropyChart) entropyChart?: BinaryEntropyChart;
-
   results: Record<string, ModelResult> = {};
   predictions?: Predictions;
   modelMetrics: ModelMetric[] = [];
@@ -38,6 +37,8 @@ export class ReportViewer implements OnChanges {
     if (this.job?.result) {
       const parsed = JSON.parse(this.job.result);
       this.predictions = parsed['predictions'];
+
+      //strips "predictions" key from parsed result (only need per model data here)
       const { predictions: _, ...modelResults } = parsed;
       this.results = modelResults;
       this.modelMetrics = Object.entries(this.results as Record<string, ModelResult>).map(([name, r]) => ({
@@ -46,19 +47,20 @@ export class ReportViewer implements OnChanges {
         confidence: this.entropy(r.p_fake),
         verdict:r.p_fake > 0.5 ? 'fake':'authentic',
       }));
-
       const values = this.modelMetrics.map(m => m.pFake);
-
       this.avgPFake = values.reduce((a, b) => a + b, 0) / values.length;
       this.avgConfidence = this.entropy(this.avgPFake);
       this.avgVerdict = this.avgPFake > 0.5 ? 'fake' : 'authentic';
     }
   }
+
+  //binary entropy function
   private entropy(p: number): number {
     if (p==0||p== 1) return 1;
     return 1 -(-p* Math.log2(p) - (1 - p) *Math.log2(1 - p));
   }
 
+  //adjust chart colors (for print contrast), trigger print, restore after
   exportPdf(): void {
     this.entropyChart?.prepareForPrint();
     window.print();
