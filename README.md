@@ -16,8 +16,8 @@ No single detection model provides complete coverage across a range of generatio
 
 - Running **three independent detection models** against an uploaded image
 - Producing a **per-model probability score** (`p_fake`) for each analysis
-- Aggregating scores into a **group confidence score** using the inverted binary entropy function
-- Generating an **exportable PDF report** with a heatmap overlay, entropy chart, and per-model verdict table
+- Aggregating scores into a **group confidence score** using an inverted binary entropy function
+- Generating an **exportable PDF report** with a heatmap overlay, entropy chart, and a table showing outputs per model.
 
 The goal is not to render a verdict but to **inform human judgment** through multiple different methods of analysis.
 
@@ -83,7 +83,7 @@ ng serve
 
 Navigate to `http://localhost:4200`.
 
-> **Note:** The models used rely heavily on NVIDIA's CUDA compute platform. As such, GPU availability significantly affects analysis time. A fixed timeout is not enforced, as slow-hardware environments could be incorrectly flagged as failures. Images are capped at 5MB to prevent unbounded memory usage.
+> **Note:** The models used rely heavily on NVIDIA's CUDA compute platform. As such, GPU availability significantly affects analysis time. A fixed timeout is not enforced, as slow hardware environments could be incorrectly flagged as failures. Images are capped at 5MB to prevent unbounded memory usage.
 
 ---
 
