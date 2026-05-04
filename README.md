@@ -59,8 +59,8 @@ Each model runs in its own isolated Docker container and outputs results in `.np
 
 ```bash
 # Clone the repository
-git clone https://github.com/mrnagel/image-authenticty-project
-cd image-authenticty-project
+git clone https://github.com/mrnagel/AIGIgator
+cd AIGIgator
 ```
 
 ### Running the Backend
