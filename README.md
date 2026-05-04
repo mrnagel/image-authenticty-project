@@ -114,9 +114,85 @@ Confidence is highest when `p_fake` is near 0 or 1 and lowest when `p_fake` = 0.
 
 > A `p_fake` of 0.895 may still yield only ~51% confidence. Rather than reward high raw probabilities, the system is desingned to penalize uncertain scores.
 
-When models disagree, overall confidence drops and the chart makes the disagreement visually apparent. This can also be helpful in determing the nature of manipulation uesd, depending on which models are used to detect it.
+When models disagree, overall confidence drops and the chart makes the disagreement visually apparent. This can also be helpful in determining the nature of manipulation used, depending on which models are used to detect it.
+
+
+## Changing Models
+
+As AI image generation improves, you may need to add or remove models from the system. This section walks you through both processes.
 
 ---
+
+### Adding a Model
+
+1. **Create a new folder** inside the `models/` directory, named after your model.
+
+2. **Add the model's scripts** — any files needed for the model to generate a prediction. These are usually provided by the model's source.
+
+   > **Important:** The model must output a `.npz` file containing an entry called `p_fake`. Without this, the model's results will not appear in the report.
+
+3. **Create a `Dockerfile` and `entrypoint.sh`** in the model's folder. These tell the system how to run the model in an isolated environment. You can copy an existing model's files as a starting point — see the examples below.
+
+4. **Register the model** by adding a new entry in `backend/docker-compose.yml`. Copy an existing model's section and update the name and folder path to match your new model.
+
+---
+
+### Examples
+
+#### Dockerfile
+
+```dockerfile
+FROM python
+
+WORKDIR /backend
+RUN mkdir -p /model_outputs /saved_photo
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Any other commands needed to initialize the model
+
+COPY . .
+
+RUN chmod +x entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
+```
+
+#### entrypoint.sh
+
+```bash
+#!/bin/bash
+
+FILE=$(ls /saved_photo | head -1)
+
+exec # Command to execute the model's prediction script
+```
+
+#### docker-compose.yml entry
+
+```yaml
+<model-name>:
+  build:
+    context: ../models/<model-name>
+    dockerfile: Dockerfile
+  image: <model-name>
+  volumes:
+    - ./model_outputs:/model_outputs
+    - ./saved_photo:/saved_photo
+```
+
+---
+
+### Removing a Model
+
+1. **Delete the model's folder** from the `models/` directory.
+2. **Remove the corresponding entry** from `backend/docker-compose.yml`.
+
+---
+
+### Changing the Visualizer
+
+If you need to swap in a different visualizer, the process is the same as adding a model with one key difference: the folder **must** be named `visualizer`. You may also need to add an extra volume in `docker-compose.yml` to give the visualizer access to the model output data.
 
 ## Authors
 
